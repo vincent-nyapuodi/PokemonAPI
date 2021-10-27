@@ -38,7 +38,7 @@ function App() {
   return(
   <div className="App">
     <div className="nav">
-      <img className="logo" src={logo}/>
+      <img className="logo" src={logo} alt="logo"/>
     <form onSubmit={handleSubmit}>
     <p>Type in your character and press Enter Key to view stats</p>
       <label>
