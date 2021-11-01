@@ -2,6 +2,7 @@ import React from "react";
 import Axios from "axios";
 import './App.css';
 import logo from "../src/images/logo.png"
+import * as ReactBootStrap from 'react-bootstrap';
 
 
 function App() {
@@ -9,7 +10,8 @@ function App() {
   //create a state to display data
   const [pokemon, setPokemon] = React.useState("pikachu");
   const [pokemonData, setPokemonData] = React.useState([]);
-  const [pokemonType, setPokemonType] = React.useState(""); 
+  const [pokemonType, setPokemonType] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   //create a function when called gets pokemon
   const getPokemon = () => {
@@ -20,8 +22,8 @@ function App() {
       setPokemonType(response.data.types[0].type.name);
       setPokemonData(toArray);
       console.log(response);  
-    }
-    );
+    });
+    setLoading(true);
   };
 
   //function to make entered text to lower case
@@ -29,16 +31,26 @@ function App() {
     setPokemon(e.target.value.toLowerCase())
   }
 
-  // function that prevents page from refreshing
+  
   const handleSubmit = (e) => {
-    e.preventDefault();
-    getPokemon();
+    try{
+      //prevent page from refreshing
+      e.preventDefault();
+      getPokemon();
+    }
+    catch{
+      console.log(console.error());
+    }
+    
   };
   
   return(
   <div className="App">
     <div className="nav">
+      <div>
       <img className="logo" src={logo} alt="logo"/>
+      </div>
+      
     <form onSubmit={handleSubmit}>
     <p>Type in your character and press Enter Key to view stats</p>
       <label>
@@ -47,6 +59,10 @@ function App() {
     </form>
     </div>
     
+    
+
+    
+
     {pokemonData.map((data) => {
       return(
         <div className="body">
@@ -93,7 +109,8 @@ function App() {
            </div>
 
       )
-    })} 
+})} 
+
   </div> );
 }
 
